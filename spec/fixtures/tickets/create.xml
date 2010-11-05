@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ticket>
+  <assigned-at>2007-06-03T22:15:44Z</assigned-at>
+  <assignee-id>4</assignee-id>
+  <assignee-updated-at/>
+  <created-at>2007-06-03T20:15:44Z</created-at>
+  <subject></subject>
+  <description>My printer is not working</description>
+  <external-id/>
+  <group-id>2</group-id>
+  <id>2</id>
+  <linked-id/>
+  <priority-id>3</priority-id>
+  <submitter-id>3</submitter-id>
+  <status-id>1</status-id>
+  <status-updated-at>2007-06-03T22:15:44Z</status-updated-at>
+  <requester-id>3</requester-id>
+  <requester-updated-at>2007-06-03T22:15:44Z</requester-updated-at>
+  <ticket-type-id>2</ticket-type-id>
+  <updated-at>2007-06-03T20:15:45Z</updated-at>
+  <via-id>0</via-id>
+  <current-tags>printer hp</current-tags>
+  <score>28</score>
+</ticket>
