@@ -16,6 +16,8 @@ begin
     gem.add_dependency "activeresource", ">= 2.3.2"
     gem.add_dependency "addressable", ">= 2.1.2"
     gem.add_dependency "zendesk-api"
+    gem.add_dependency "curb"
+    gem.add_dependency "i18n"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
