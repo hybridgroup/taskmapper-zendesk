@@ -24,43 +24,5 @@ module TicketMaster::Provider
       end
     end
 	
-	# The projects
-    #
-    # We have to merge in the auth information because, due to the class-based authentication
-    # mechanism, if we don't reset the authorize information for every request, it would 
-    # end up using whatever the previous instantiated object's account info is.
-    def projects(*options)
-      authorize
-      super(*options)
-    end
-    
-    # The project
-    def project(*options)
-      authorize
-      super(*options)
-    end
-    
-    # The tickets
-    #
-    # Due to the nature of lighthouse, we must have the project_id to pull tickets. You can
-    # pass in the id through this format:
-    # 
-    #    .tickets(22)
-    #    .tickets(:project_id => 22)
-    # 
-    # To conform to ticketmaster's standard of returning all tickets on a call to this method
-    # without any parameters, if no parameters are passed, it will return all tickets for whatever
-    # the first project is.
-    def tickets(*options)
-      authorize
-      super(*options)
-    end
-    
-    # the ticket
-    def ticket(*options)
-      authorize
-      super(*options)
-    end
-    
   end
 end
