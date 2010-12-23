@@ -18,16 +18,4 @@ describe "Ticketmaster::Provider::Zendesk::Ticket" do
     @klass = TicketMaster::Provider::Zendesk::Ticket
   end
   
-  #it "should be able to load all tickets" do
-  #  @ticketmaster.tickets.should be_an_instance_of(Array)
-  #  @ticketmaster.tickets.first.should be_an_instance_of(@klass)
-  #end
-  
-  
-  it "should be able to load a single ticket" do
-    @ticket = @ticketmaster.ticket.find(3)
-    @ticket.should be_an_instance_of(@klass)
-    @ticket.id.should == 3
-  end
-  
 end
