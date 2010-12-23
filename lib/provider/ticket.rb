@@ -1,6 +1,6 @@
 
 module TicketMaster::Provider
-  module Zendesk
+  module Zen
     # Ticket class for ticketmaster-zendesk
     #
     require 'ticketmaster'    

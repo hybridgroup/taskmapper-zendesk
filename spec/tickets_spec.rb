@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "Ticketmaster::Provider::Zendesk::Ticket" do
+describe "Ticketmaster::Provider::Zen::Ticket" do
   
    before(:all) do
     headers = {'Authorization' => 'Basic Zm9vOjAwMDAwMA==', 'Accept' => 'application/xml'}
@@ -15,7 +15,7 @@ describe "Ticketmaster::Provider::Zendesk::Ticket" do
   
   before(:each) do
     @ticketmaster = TicketMaster.new(:zendesk, :account => 'ticketmaster', :username => 'foo', :password => '000000')
-    @klass = TicketMaster::Provider::Zendesk::Ticket
+    @klass = TicketMaster::Provider::Zen::Ticket
   end
   
 end

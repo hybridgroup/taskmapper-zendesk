@@ -1,5 +1,5 @@
 module TicketMaster::Provider
-  module Zendesk
+  module Zen
     # The comment class for ticketmaster-zendesk
     #
     # Do any mapping between Ticketmaster and your system's comment model here
