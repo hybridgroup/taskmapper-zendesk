@@ -1,5 +1,5 @@
 module TicketMaster::Provider
-  module Zen
+  module Zendesk
     # Project class for ticketmaster-zendesk
     # 
     # 

@@ -1,7 +1,7 @@
 require 'ticketmaster'
 module TicketMaster::Provider
   # This is the Zendesk Provider for ticketmaster
-  module Zen
+  module Zendesk
     include TicketMaster::Provider::Base
     
     # This is for cases when you want to instantiate using TicketMaster::Provider::Yoursystem.new(auth)
@@ -16,7 +16,7 @@ module TicketMaster::Provider
       if auth.account.nil? or (auth.token.nil? and (auth.username.nil? and auth.password.nil?))
         raise "Please provide at least an account (subdomain) and token or username and password)"
       end
-      @zendesk = Zendesk::Main.new(auth.subdomain || auth.account, auth.username, auth.password)
+      @zendesk = ::Zendesk::Main.new(auth.subdomain || auth.account, auth.username, auth.password)
     end
 	
   end
