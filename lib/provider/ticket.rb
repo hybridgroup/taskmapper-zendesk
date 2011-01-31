@@ -1,28 +1,36 @@
 
 module TicketMaster::Provider
   module Zendesk
-    # Ticket class for ticketmaster-zendesk
-    #
-    require 'ticketmaster'    
+
     class Ticket < TicketMaster::Provider::Base::Ticket
       # declare needed overloaded methods here
 
-      def id
-        @system_data[:client].number
+      API = ZendeskAPI::Search
+
+      def initialize(*object)
+        if object.first 
+          args = object.first
+          object = args.shift
+          project_id = args.shift
+          @system_data = {:client => object}
+          unless object.is_a? Hash
+            hash = {:id => object.id,
+                    :status => object.status,
+                    :title => object.subject,
+                    :created_at => object.created-at,
+                    :updated_at => object.updated-at,
+                    :description => object.description,
+                    :assignee => object.assignee,
+                    :requestor => object.requestor,
+                    :project_id => project_id}
+          else
+            hash = object
+          end
+          super hash
+        end
       end
 
-      # This is to get the status, mapped to state
-      def status
-        state
-      end
-
-      def self.find_by_id(project_id, id)
-        self.search(project_id, {'id' => id}).first
-      end
-
-      def self.find_by_attributes(project_id, attributes = {})
-        self.search(project_id, attributes)
-      end
     end
+
   end
 end

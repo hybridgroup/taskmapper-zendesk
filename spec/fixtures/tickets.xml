@@ -1,49 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tickets type="array">
-  <ticket>
-    <assigned-at>2007-06-03T22:15:44Z</assigned-at>
-    <assignee-id>4</assignee-id>
-    <assignee-updated-at/>
-    <created-at>2007-06-03T20:15:44Z</created-at>
-    <subject></subject>
-    <description>My printer is not working</description>
-    <external-id/>
-    <group-id>2</group-id>
-    <id>2</id>
-    <linked-id/>
-    <priority-id>3</priority-id>
-    <submitter-id>3</submitter-id>
-    <status-id>1</status-id>
-    <status-updated-at>2007-06-03T22:15:44Z</status-updated-at>
-    <requester-id>3</requester-id>
-    <requester-updated-at>2007-06-03T22:15:44Z</requester-updated-at>
-    <ticket-type-id>2</ticket-type-id>
-    <updated-at>2007-06-03T20:15:45Z</updated-at>
-    <via-id>0</via-id>
-    <current-tags>printer hp</current-tags>
-    <score>28</score>
-  </ticket>
-  <ticket>
-     <assigned-at>2007-06-03T22:15:44Z</assigned-at>
-    <assignee-id>4</assignee-id>
-    <assignee-updated-at/>
-    <created-at>2007-06-03T20:15:44Z</created-at>
-    <subject></subject>
-    <description>My printer is not working</description>
-    <external-id/>
-    <group-id>2</group-id>
-    <id>5</id>
-    <linked-id/>
-    <priority-id>3</priority-id>
-    <submitter-id>3</submitter-id>
-    <status-id>1</status-id>
-    <status-updated-at>2007-06-03T22:15:44Z</status-updated-at>
-    <requester-id>3</requester-id>
-    <requester-updated-at>2007-06-03T22:15:44Z</requester-updated-at>
-    <ticket-type-id>2</ticket-type-id>
-    <updated-at>2007-06-03T20:15:45Z</updated-at>
-    <via-id>0</via-id>
-    <current-tags>printer hp</current-tags>
-    <score>28</score>
-  </ticket>
-</tickets>
+<records type="array" count="2">
+  <record>
+    <assigned-at type="datetime">2011-01-31T14:09:12-04:00</assigned-at>
+    <assignee-id type="integer">26218414</assignee-id>
+    <base-score type="integer">12</base-score>
+    <created-at type="datetime">2011-01-31T14:09:12-04:00</created-at>
+    <current-collaborators nil="true"></current-collaborators>
+    <current-tags nil="true"></current-tags>
+    <description>Testing</description>
+    <due-date type="datetime" nil="true"></due-date>
+    <entry-id type="integer" nil="true"></entry-id>
+    <external-id nil="true"></external-id>
+    <group-id type="integer">121752</group-id>
+    <initially-assigned-at type="datetime">2011-01-31T14:09:12-04:00</initially-assigned-at>
+    <latest-recipients nil="true"></latest-recipients>
+    <nice-id type="integer">1</nice-id>
+    <organization-id type="integer">457249</organization-id>
+    <original-recipient-address nil="true"></original-recipient-address>
+    <priority-id type="integer">1</priority-id>
+    <recipient nil="true"></recipient>
+    <requester-id type="integer">26218414</requester-id>
+    <resolution-time type="integer" nil="true"></resolution-time>
+    <solved-at type="datetime" nil="true"></solved-at>
+    <status-id type="integer">1</status-id>
+    <status-updated-at type="datetime">2011-01-31T14:09:12-04:00</status-updated-at>
+    <subject>Testing</subject>
+    <submitter-id type="integer">26218414</submitter-id>
+    <ticket-type-id type="integer">3</ticket-type-id>
+    <updated-at type="datetime">2011-01-31T14:09:12-04:00</updated-at>
+    <updated-by-type-id type="integer">0</updated-by-type-id>
+    <via-id type="integer">0</via-id>
+    <score type="integer">12</score>
+    <problem-id nil="true"></problem-id>
+    <comments type="array">
+      <comment>
+        <author-id type="integer">26218414</author-id>
+        <created-at type="datetime">2011-01-31T14:09:12-04:00</created-at>
+        <is-public type="boolean">true</is-public>
+        <type>Comment</type>
+        <value>Testing</value>
+        <via-id type="integer">0</via-id>
+        <attachments type="array"/>
+      </comment>
+    </comments>
+    <linkings type="array"/>
+    <ticket-field-entries type="array"/>
+    <channel nil="true"></channel>
+  </record>
+  <record>
+    <assigned-at type="datetime">2011-01-31T14:30:31-04:00</assigned-at>
+    <assignee-id type="integer">26218414</assignee-id>
+    <base-score type="integer">72</base-score>
+    <created-at type="datetime">2011-01-31T14:30:31-04:00</created-at>
+    <current-collaborators nil="true"></current-collaborators>
+    <current-tags nil="true"></current-tags>
+    <description>You've got a new ticket!
+
+To help you get started learning how your zendesk simplifies ticket workflow, I emailed you at support@hybridgroup.zendesk.com and this ticket was created in your zendesk. Neat!
+
+You can answer this ticket in one of two ways:
+
+By Email: If you are looking at this in your email inbox, simply hit &quot;Reply&quot;
+
+By Zendesk: If you are looking at this ticket in your zendesk:
+
+* Enter a comment (e.g. &quot;How am I doing?&quot;)
+* Change status from Open to Pending (now, you&#8217;re waiting for me to get back to you!)
+* Click submit
+
+Either way, both your reply and follow-ups will be added to the ticket history and organized in your zendesk.
+
+You&#8217;re eligible for 24-hour support throughout your trial. Please don&#8217;t hesitate to call or email our customer advocate team:
+
+*(e) support@zendesk.com
+*(p) +1 415.418.7506
+
+Thank you for using Zendesk,
+
+Kelly
+Customer Advocate at Zendesk</description>
+    <due-date type="datetime" nil="true"></due-date>
+    <entry-id type="integer" nil="true"></entry-id>
+    <external-id nil="true"></external-id>
+    <group-id type="integer">121752</group-id>
+    <initially-assigned-at type="datetime">2011-01-31T14:30:31-04:00</initially-assigned-at>
+    <latest-recipients nil="true"></latest-recipients>
+    <nice-id type="integer">2</nice-id>
+    <organization-id type="integer" nil="true"></organization-id>
+    <original-recipient-address nil="true"></original-recipient-address>
+    <priority-id type="integer">0</priority-id>
+    <recipient>support@hybridgroup.zendesk.com</recipient>
+    <requester-id type="integer">26220353</requester-id>
+    <resolution-time type="integer" nil="true"></resolution-time>
+    <solved-at type="datetime" nil="true"></solved-at>
+    <status-id type="integer">1</status-id>
+    <status-updated-at type="datetime">2011-01-31T14:30:31-04:00</status-updated-at>
+    <subject>Welcome to Zendesk, You've Got a Ticket!</subject>
+    <submitter-id type="integer">26220353</submitter-id>
+    <ticket-type-id type="integer">0</ticket-type-id>
+    <updated-at type="datetime">2011-01-31T14:30:31-04:00</updated-at>
+    <updated-by-type-id type="integer">1</updated-by-type-id>
+    <via-id type="integer">4</via-id>
+    <score type="integer">72</score>
+    <problem-id nil="true"></problem-id>
+    <comments type="array">
+      <comment>
+        <author-id type="integer">26220353</author-id>
+        <created-at type="datetime">2011-01-31T14:30:31-04:00</created-at>
+        <is-public type="boolean">true</is-public>
+        <type>Comment</type>
+        <value>You've got a new ticket!
+
+To help you get started learning how your zendesk simplifies ticket workflow, I emailed you at support@hybridgroup.zendesk.com and this ticket was created in your zendesk. Neat!
+
+You can answer this ticket in one of two ways:
+
+By Email: If you are looking at this in your email inbox, simply hit &quot;Reply&quot;
+
+By Zendesk: If you are looking at this ticket in your zendesk:
+
+* Enter a comment (e.g. &quot;How am I doing?&quot;)
+* Change status from Open to Pending (now, you&#8217;re waiting for me to get back to you!)
+* Click submit
+
+Either way, both your reply and follow-ups will be added to the ticket history and organized in your zendesk.
+
+You&#8217;re eligible for 24-hour support throughout your trial. Please don&#8217;t hesitate to call or email our customer advocate team:
+
+*(e) support@zendesk.com
+*(p) +1 415.418.7506
+
+Thank you for using Zendesk,
+
+Kelly
+Customer Advocate at Zendesk</value>
+        <via-id type="integer">4</via-id>
+        <attachments type="array"/>
+      </comment>
+    </comments>
+    <linkings type="array"/>
+    <ticket-field-entries type="array"/>
+    <channel nil="true"></channel>
+  </record>
+</records>
