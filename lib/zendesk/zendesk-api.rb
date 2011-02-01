@@ -24,6 +24,7 @@ module ZendeskAPI
     self.format = :json
     def self.inherited(base)
       ZendeskAPI.resources << base
+      super
     end
   end
 
