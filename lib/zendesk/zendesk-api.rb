@@ -21,7 +21,7 @@ module ZendeskAPI
   end
 
   class Base < ActiveResource::Base
-    self.format = :xml
+    self.format = :json
     def self.inherited(base)
       ZendeskAPI.resources << base
     end
