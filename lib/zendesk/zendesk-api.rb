@@ -2,18 +2,6 @@ require 'rubygems'
 require 'active_support'
 require 'active_resource'
 
-module ActiveResource
-  module Formats
-    module XmlFormat
-      extend self
-
-      def decode(xml)
-        Nokogiri::XML(xml)
-      end
-    end
-  end
-end
-
 module ZendeskAPI
   class Error < StandardError; end
 
