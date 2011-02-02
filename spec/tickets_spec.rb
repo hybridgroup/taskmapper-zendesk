@@ -5,12 +5,10 @@ describe "Ticketmaster::Provider::Zendesk::Ticket" do
    before(:all) do
      @project_id = "hybridgroup-project"
      headers = {'Authorization' => 'Basic cmFmYWVsQGh5YnJpZGdyb3VwLmNvbToxMjM0NTY=', 'Accept' => 'application/json'}
-     headers_post = {'Authorization' => 'Basic cmFmYWVsQGh5YnJpZGdyb3VwLmNvbToxMjM0NTY=', 'Accept' => 'application/json'} 
      post_data = {:ticket => {:subject => "hello world", :requester_name => "Rafael George", :description => "here"}}.to_json
      ActiveResource::HttpMock.respond_to do |mock| 
        mock.get '/search.json?query=status%3Aopen',headers, fixture_for('tickets', 'json'), 200
        mock.get '/tickets/1.json', headers, fixture_for('ticket', 'json'), 200
-       mock.post '/tickets.json', headers_post, post_data, 200
      end
    end
 
@@ -45,9 +43,9 @@ describe "Ticketmaster::Provider::Zendesk::Ticket" do
      ticket.title.should == "Testing"
    end
 
-   it "should be able to create a ticket" do
-     ticket = @project.ticket!(:subject => 'hello world', :description => 'here', :requester_name => "Rafael George")
-     ticket.should be_an_instance_of(@klass)
-     ticket.id.should == 3
+   it "should be able to update a ticket" do
+     ticket = @project.ticket(1)
+     ticket.title = "changed"
+     ticket.save.should == true
    end
 end
