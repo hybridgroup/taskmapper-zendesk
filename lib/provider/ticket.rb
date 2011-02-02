@@ -5,7 +5,8 @@ module TicketMaster::Provider
     class Ticket < TicketMaster::Provider::Base::Ticket
       # declare needed overloaded methods here
 
-      API = ZendeskAPI::Search
+      SEARCH_API = ZendeskAPI::Search
+      API = ZendeskAPI::Ticket
 
       def initialize(*object)
         if object.first 
@@ -31,15 +32,52 @@ module TicketMaster::Provider
         end
       end
 
+      def created_at
+        Time.parse(self[:created_at])
+      end
+
+      def updated_at
+        Time.parse(self[:updated_at])
+      end
+
       def self.find_all(*options)
         project_id = options.first
-        API.find(:all, :params => {:query => "status:open"}).collect { |ticket| self.new [ticket, project_id]}
+        SEARCH_API.find(:all, :params => {:query => "status:open"}).collect { |ticket| self.new [ticket, project_id]}
       end
 
       def self.find_by_id(*options)
         id = options.shift
         project_id = options.shift
-        self.new [ZendeskAPI::Ticket.find(id), project_id]
+        self.new [API.find(id), project_id]
+      end
+
+      def comments(*options)
+        if options.first.is_a? Array
+          ticket_comments.select do |comment|
+            comment if options.first.any? { |comment_id| comment_id == comment.id }
+          end
+        elsif options.first.is_a? Hash
+          comments_find_by_attributes(options.first)
+        else
+          ticket_comments
+        end
+      end
+
+      def comment(*options)
+        unless options.first.is_a? Hash
+          ticket_comments.select { |comment| comment.id == options.first }.first
+        else
+          comments_find_by_attributes(options.first).first
+        end
+      end
+
+      private 
+      def ticket_comments
+        Comment.find_all(self.project_id, self.id)
+      end
+
+      def comments_find_by_attributes(attributes)
+        Comment.find_by_attributes(self.project_id, self.id, attributes)
       end
 
     end
