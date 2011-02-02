@@ -4,10 +4,10 @@ describe "Ticketmaster::Provider::Zendesk::Ticket" do
   
    before(:all) do
      @project_id = "hybridgroup-project"
-     headers = {'Authorization' => 'Basic cmFmYWVsQGh5YnJpZGdyb3VwLmNvbToxMjM0NTY=', 'Accept' => 'application/json'}
-     ActiveResource::HttpMock.respond_to do |mock| 
-       mock.get '/search.json?query%3Dstatus%3Aopen=',headers, fixture_for('tickets', 'json'), 200
-     end
+     #headers = {'Authorization' => 'Basic cmFmYWVsQGh5YnJpZGdyb3VwLmNvbToxMjM0NTY=', 'Accept' => 'application/json'}
+     #ActiveResource::HttpMock.respond_to do |mock| 
+     #  mock.get '/search.json?query%3Dstatus%3Aopen=',headers, fixture_for('tickets', 'json'), 200
+     #end
    end
 
    before(:each) do

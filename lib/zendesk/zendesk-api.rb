@@ -18,10 +18,12 @@ module ZendeskAPI
     def resources
       @resources ||= []
     end
+
   end
 
   class Base < ActiveResource::Base
     self.format = :json
+    self.site = 'http://hybridgroup.zendesk.com'
     def self.inherited(base)
       ZendeskAPI.resources << base
       super
@@ -32,7 +34,9 @@ module ZendeskAPI
 
     def self.collection_path(prefix_options = {}, query_options = nil) 
       prefix_options, query_options = split_options(prefix_options) if query_options.nil?
-      "#{prefix(prefix_options)}search.#{format.extension}#{query_string(query_options)}"
+      requester = "#{prefix(prefix_options)}search.#{format.extension}#{query_string(query_options)}"
+      puts requester
+      requester
     end
 
   end

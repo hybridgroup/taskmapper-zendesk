@@ -36,7 +36,7 @@ module TicketMaster::Provider
 
       def tickets(*options)
         if options.empty?
-          ZendeskAPI::Search.find(:all, :params => "query=status:open").collect { |ticket| Ticket.new ticket }
+          ZendeskAPI::Search.find(:all, :params => "query=status:open")
         end
       end
 
