@@ -14,20 +14,32 @@ module TicketMaster::Provider
           project_id = args.shift
           @system_data = {:client => object}
           unless object.is_a? Hash
-            hash = {:id => object.id,
-                    :status => object.status,
+            hash = {:id => object.nice_id,
+                    :status => object.status_id,
                     :title => object.subject,
-                    :created_at => object.created-at,
-                    :updated_at => object.updated-at,
+                    :created_at => object.created_at,
+                    :updated_at => object.updated_at,
                     :description => object.description,
-                    :assignee => object.assignee,
-                    :requestor => object.requestor,
+                    :assignee => object.assignee_id,
+                    :requestor => object.requester_id,
+                    :priority => object.priority_id,
                     :project_id => project_id}
           else
             hash = object
           end
           super hash
         end
+      end
+
+      def self.find_all(*options)
+        project_id = options.first
+        API.find(:all, :params => {:query => "status:open"}).collect { |ticket| self.new [ticket, project_id]}
+      end
+
+      def self.find_by_id(*options)
+        id = options.shift
+        project_id = options.shift
+        self.new [ZendeskAPI::Ticket.find(id), project_id]
       end
 
     end

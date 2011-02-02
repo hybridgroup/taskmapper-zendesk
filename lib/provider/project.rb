@@ -36,8 +36,32 @@ module TicketMaster::Provider
 
       def tickets(*options)
         if options.empty?
-          ZendeskAPI::Search.find(:all, :params => {:query =>"status:open"})
+          Ticket.find_all(self.name).collect { |ticket| Ticket.new [ticket, self.name]}
+        elsif options.first.is_a? Array
+          Ticket.find_all(self.name).collect { |ticket| ticket if options.first.any? { |ticket_id| ticket_id == ticket.id }}
+        elsif options.first.is_a? Hash
+          Ticket.find_all(self.name).select do |ticket|
+            options.first.inject(true) do |memo, kv|
+              break unless memo
+              key, value = kv
+              begin
+                memo &= ticket.send(key)
+              rescue NoMethodError
+                memo = false
+              end
+              memo
+            end
+          end
         end
+      end
+
+      def ticket(*options)
+        ticket_id = options.first
+        Ticket.find_by_id(ticket_id)
+      end
+
+      def ticket!(*options)
+        ZendeskAPI::Ticket.create(options.first)
       end
 
     end
