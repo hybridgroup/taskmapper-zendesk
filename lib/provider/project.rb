@@ -61,7 +61,7 @@ module TicketMaster::Provider
       end
 
       def ticket!(*options)
-        Ticket.new [ZendeskAPI::Request.create(options.first), self.name]
+        Ticket.new [ZendeskAPI::Ticket.create(options.first), self.name]
       end
 
     end

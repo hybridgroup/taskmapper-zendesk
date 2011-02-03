@@ -5,7 +5,8 @@ module TicketMaster::Provider
     class Ticket < TicketMaster::Provider::Base::Ticket
       # declare needed overloaded methods here
 
-      API = ZendeskAPI::Request
+      SEARCH_API = ZendeskAPI::Search
+      API = ZendeskAPI::Ticket
 
       def initialize(*object)
         if object.first 
@@ -41,7 +42,7 @@ module TicketMaster::Provider
 
       def self.find_all(*options)
         project_id = options.first
-        API.find(:all).collect { |ticket| self.new [ticket, project_id]}
+        SEARCH_API.find(:all, :params => {:query => "status:open"}).collect { |ticket| self.new [ticket, project_id]}
       end
 
       def self.find_by_id(*options)

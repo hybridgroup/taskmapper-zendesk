@@ -5,9 +5,9 @@ describe "Ticketmaster::Provider::Zendesk::Ticket" do
   before(:all) do
     @project_id = "hybridgroup-project"
     headers = {'Accept' => 'application/json'}
-    FakeWeb.register_uri(:get, "http://rafael%40hybridgroup.com:123456@hybridgroup.zendesk.com/requests.json", :body => fixture_for('tickets','json'), :status => ["200", "OK"])
-    FakeWeb.register_uri(:get, "http://rafael%40hybridgroup.com:123456@hybridgroup.zendesk.com/requests/1.json", :body => fixture_for('ticket','json'), :status => ["200", "OK"])
-    FakeWeb.register_uri(:post, "http://rafael%40hybridgroup.com:123456@hybridgroup.zendesk.com/requests.json", :body => fixture_for('ticket','json'), :status => ["200", "OK"])
+    FakeWeb.register_uri(:get, "http://rafael%40hybridgroup.com:123456@hybridgroup.zendesk.com/search.json?query=status%3Aopen", :body => fixture_for('tickets','json'), :status => ["200", "OK"])
+    FakeWeb.register_uri(:get, "http://rafael%40hybridgroup.com:123456@hybridgroup.zendesk.com/tickets/1.json", :body => fixture_for('ticket','json'), :status => ["200", "OK"])
+    FakeWeb.register_uri(:post, "http://rafael%40hybridgroup.com:123456@hybridgroup.zendesk.com/tickets.json", :body => fixture_for('ticket','json'), :status => ["200", "OK"])
   end
 
   before(:each) do
