@@ -27,6 +27,7 @@ describe "Ticketmaster::Provider::Zendesk::Ticket" do
     tickets = @project.tickets([1])
     tickets.should be_an_instance_of(Array)
     tickets.first.should be_an_instance_of(@klass)
+    tickets.size.should == 1
     tickets.first.title.should == "Testing"
   end
 
@@ -41,6 +42,16 @@ describe "Ticketmaster::Provider::Zendesk::Ticket" do
     ticket = @project.ticket(1)
     ticket.should be_an_instance_of(@klass)
     ticket.title.should == "Testing"
+  end
+
+  it "should be able to find a ticket by attributes" do 
+    ticket = @project.ticket(:id => 1)
+    ticket.should be_an_instance_of(@klass)
+    ticket.title.should == "Testing"
+  end
+
+  it "should return the ticket class without parameter in the ticket method" do
+    @project.ticket.should == @klass
   end
 
 end
