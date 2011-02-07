@@ -12,7 +12,7 @@ First we have to instantiate a new ticketmaster instance:
 
 If you do not pass in account, username and password, you won't get any information.
 
-== Finding Projects
+## Finding Projects
 
 You can find your own projects by doing:
 
@@ -23,13 +23,13 @@ You can find your own projects by doing:
 Note: Zendesk dosen't support a projects which means this is a ticketmaster place holder object, you will always get the same project name as follows: 'accountname-project'.
 
 	
-== Finding Tickets
+## Finding Tickets
 
     tickets = project.tickets # All open issues
     tickets = project.tickets([1,2]) # An array of tickets with the specified id's
     ticket = project.ticket(<issue_number>)
 
-== Finding Comments
+## Finding Comments
     
     comments = tickets.comments
     comments = tickets.comments([1,2]) # An array of comments with the specified id's
