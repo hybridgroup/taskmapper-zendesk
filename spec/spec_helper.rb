@@ -5,9 +5,7 @@ require 'ticketmaster'
 require 'ticketmaster-zendesk'
 require 'spec'
 require 'spec/autorun'
-require 'fakeweb'
 
-FakeWeb.allow_net_connect = false
 
 Spec::Runner.configure do |config|
   

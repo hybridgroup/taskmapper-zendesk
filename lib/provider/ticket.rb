@@ -51,12 +51,48 @@ module TicketMaster::Provider
         self.new [API.find(id), project_id]
       end
 
-      def comments
-        []
+      def self.find_by_attributes(project_id, attributes = {})
+        self.find_all(project_id).select do |ticket|
+          attributes.inject(true) do |memo, kv|
+            break unless memo
+            key, value = kv
+            begin
+              memo &= ticket.send(key) == value
+            rescue NoMethodError
+              memo = false
+            end
+            memo
+          end
+        end
       end
 
-      def comment
-        nil
+      def comments(*options)
+        if options.first.is_a? Array
+          ticket_comments.select do |comment|
+            comment if options.first.any? { |comment_id| comment_id == comment.id }
+          end
+        elsif options.first.is_a? Hash
+          comments_find_by_attributes(options.first)
+        else
+          ticket_comments
+        end
+      end
+
+      def comment(*options)
+        unless options.first.is_a? Hash
+          ticket_comments.select { |comment| comment.id == options.first }.first
+        else
+          comments_find_by_attributes(options.first).first
+        end
+      end
+
+      private 
+      def ticket_comments
+        Comment.find_all(self[:project_id], self[:id])
+      end
+
+      def comments_find_by_attributes(attributes)
+        Comment.find_by_attributes(self[:project_id], self[:id], attributes)
       end
 
     end
