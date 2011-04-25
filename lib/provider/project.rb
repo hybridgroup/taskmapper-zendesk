@@ -36,7 +36,7 @@ module TicketMaster::Provider
 
       def tickets(*options)
         if options.empty?
-          Ticket.find_all(self.name).collect { |ticket| Ticket.new [ticket, self.name]}
+          Ticket.find_all(self.name)
         elsif options.first.is_a? Array
           Ticket.find_all(self.name).select { |ticket| ticket if options.first.any? { |ticket_id| ticket_id == ticket.id }}
         elsif options.first.is_a? Hash
@@ -47,7 +47,7 @@ module TicketMaster::Provider
       def ticket(*options)
         if options.first.is_a? Fixnum
           ticket_id = options.first
-          Ticket.find_by_id(ticket_id)
+          Ticket.find_by_id(self.name, ticket_id)
         elsif options.first.is_a? Hash
           Ticket.find_by_attributes(self.name, options.first).first
         else
@@ -56,7 +56,7 @@ module TicketMaster::Provider
       end
 
       def ticket!(*options)
-        Ticket.new [ZendeskAPI::Ticket.create(options.first), self.name]
+        Ticket.new ZendeskAPI::Ticket.create(options.first), self.name
       end
 
     end
