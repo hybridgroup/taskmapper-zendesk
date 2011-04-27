@@ -62,8 +62,8 @@ module TicketMaster::Provider
       def comment(*options)
         if options.first.is_a? Fixnum
           Comment.find(project_id, id, [options.first]).first
-        else
-          comments_find_by_attributes(options.first).first
+        elsif options.first.is_a? Hash
+          Comment.find_by_attributes(project_id, id, options.first).first
         end
       end
 
