@@ -60,8 +60,8 @@ module TicketMaster::Provider
       end
 
       def comment(*options)
-        unless options.first.is_a? Hash
-          ticket_comments.select { |comment| comment.id == options.first }.first
+        if options.first.is_a? Fixnum
+          Comment.find(project_id, id, [options.first]).first
         else
           comments_find_by_attributes(options.first).first
         end
