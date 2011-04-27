@@ -56,15 +56,7 @@ module TicketMaster::Provider
       end
 
       def comments(*options)
-        if options.first.is_a? Array
-          ticket_comments.select do |comment|
-            comment if options.first.any? { |comment_id| comment_id == comment.id }
-          end
-        elsif options.first.is_a? Hash
-          comments_find_by_attributes(options.first)
-        else
-          ticket_comments
-        end
+        Comment.find(project_id, id, options)
       end
 
       def comment(*options)

@@ -9,6 +9,7 @@ module TicketMaster::Provider
       # declare needed overloaded methods here
       
       def initialize(*object)
+        return super(object.first) if object.first.is_a? Hash 
         if object.first
           object = object.first
           ticket_id = object.shift
@@ -39,9 +40,20 @@ module TicketMaster::Provider
         Time.parse(self[:updated_at])
       end
 
-      def self.find_all(*options)
-        project_id = options.shift
-        ticket_id = options.shift
+      def self.find(project_id, ticket_id, *options)
+        ticket_comments = self.find_all(project_id, ticket_id)
+        if options[0].first.is_a? Array
+          ticket_comments.select do |comment|
+            comment if options[0].first.any? { |comment_id| comment_id == comment.id }
+          end
+        elsif options[0].first.is_a? Hash
+          self.find_by_attributes(project_id, ticket_id, options[0].first)
+        else
+          ticket_comments
+        end
+      end
+
+      def self.find_all(project_id, ticket_id)
         comment_id = 0
         ZendeskAPI::Ticket.find(ticket_id).comments.collect do |comment|
           comment_id += 1
