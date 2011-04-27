@@ -35,13 +35,7 @@ module TicketMaster::Provider
       end
 
       def tickets(*options)
-        if options.empty?
-          Ticket.find_all(self.name)
-        elsif options.first.is_a? Array
-          Ticket.find_all(self.name).select { |ticket| ticket if options.first.any? { |ticket_id| ticket_id == ticket.id }}
-        elsif options.first.is_a? Hash
-          Ticket.find_by_attributes(self.name, options.first)
-        end
+        Ticket.find(self.name, options)
       end
 
       def ticket(*options)
