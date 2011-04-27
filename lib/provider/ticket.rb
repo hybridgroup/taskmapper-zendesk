@@ -51,18 +51,8 @@ module TicketMaster::Provider
       end
 
       def self.find_by_attributes(project_id, attributes = {})
-        self.find_all(project_id).select do |ticket|
-          attributes.inject(true) do |memo, kv|
-            break unless memo
-            key, value = kv
-            begin
-              memo &= ticket.send(key) == value
-            rescue NoMethodError
-              memo = false
-            end
-            memo
-          end
-        end
+        tickets = self.find_all(project_id)
+        search_by_attribute(tickets, attributes)
       end
 
       def comments(*options)
