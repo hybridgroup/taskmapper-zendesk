@@ -67,15 +67,6 @@ module TicketMaster::Provider
         end
       end
 
-      private 
-      def ticket_comments
-        Comment.find_all(self[:project_id], self[:id])
-      end
-
-      def comments_find_by_attributes(attributes)
-        Comment.find_by_attributes(self[:project_id], self[:id], attributes)
-      end
-
     end
 
   end
