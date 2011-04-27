@@ -41,6 +41,17 @@ module TicketMaster::Provider
         Time.parse(self[:updated_at])
       end
 
+      def self.find(project_id, *options)
+        tickets = self.find_all(project_id)
+        if options[0].first.is_a? Array
+          Ticket.find_all(self.name).select { |ticket| ticket if options[0].first.any? { |ticket_id| ticket_id == ticket.id }}
+        elsif options[0].first.is_a? Hash
+          Ticket.find_by_attributes(self.name, options[0].first)
+        else
+          tickets
+        end
+      end
+
       def self.find_all(*options)
         project_id = options.first
         SEARCH_API.find(:all, :params => {:query => "status:open"}).collect { |ticket| self.new([ticket, project_id])}
@@ -51,47 +62,19 @@ module TicketMaster::Provider
       end
 
       def self.find_by_attributes(project_id, attributes = {})
-        self.find_all(project_id).select do |ticket|
-          attributes.inject(true) do |memo, kv|
-            break unless memo
-            key, value = kv
-            begin
-              memo &= ticket.send(key) == value
-            rescue NoMethodError
-              memo = false
-            end
-            memo
-          end
-        end
+        search_by_attribute(self.find_all(project_id), attributes)
       end
 
       def comments(*options)
-        if options.first.is_a? Array
-          ticket_comments.select do |comment|
-            comment if options.first.any? { |comment_id| comment_id == comment.id }
-          end
-        elsif options.first.is_a? Hash
-          comments_find_by_attributes(options.first)
-        else
-          ticket_comments
-        end
+        Comment.find(project_id, id, options)
       end
 
       def comment(*options)
-        unless options.first.is_a? Hash
-          ticket_comments.select { |comment| comment.id == options.first }.first
-        else
-          comments_find_by_attributes(options.first).first
+        if options.first.is_a? Fixnum
+          Comment.find(project_id, id, [options.first]).first
+        elsif options.first.is_a? Hash
+          Comment.find_by_attributes(project_id, id, options.first).first
         end
-      end
-
-      private 
-      def ticket_comments
-        Comment.find_all(self[:project_id], self[:id])
-      end
-
-      def comments_find_by_attributes(attributes)
-        Comment.find_by_attributes(self[:project_id], self[:id], attributes)
       end
 
     end
