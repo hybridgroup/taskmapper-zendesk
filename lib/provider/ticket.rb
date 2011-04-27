@@ -62,8 +62,7 @@ module TicketMaster::Provider
       end
 
       def self.find_by_attributes(project_id, attributes = {})
-        tickets = self.find_all(project_id)
-        search_by_attribute(tickets, attributes)
+        search_by_attribute(self.find_all(project_id), attributes)
       end
 
       def comments(*options)
