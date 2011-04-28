@@ -7,6 +7,7 @@ module TicketMaster::Provider
 
       SEARCH_API = ZendeskAPI::Search
       API = ZendeskAPI::Ticket
+      USER_API = ZendeskAPI::User
 
       def initialize(*object)
         return super(object.first) if object.first.is_a? Hash 
@@ -54,7 +55,11 @@ module TicketMaster::Provider
 
       def self.find_all(*options)
         project_id = options.first
-        SEARCH_API.find(:all, :params => {:query => "status:open"}).collect { |ticket| self.new([ticket, project_id])}
+        SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
+          ticket.requester_id = requestor(ticket)
+          ticket.assignee_id = assignee(ticket)
+          self.new([ticket, project_id])
+        end
       end
 
       def self.find_by_id(project_id, ticket_id)
@@ -75,6 +80,15 @@ module TicketMaster::Provider
         elsif options.first.is_a? Hash
           Comment.find_by_attributes(project_id, id, options.first).first
         end
+      end
+
+      private
+      def self.requestor(ticket)
+        USER_API.find(ticket.requester_id).email
+      end
+
+      def self.assignee(ticket)
+        USER_API.find(ticket.assignee_id).email
       end
 
     end

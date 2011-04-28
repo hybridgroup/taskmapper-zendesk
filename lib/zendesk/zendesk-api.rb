@@ -46,4 +46,7 @@ module ZendeskAPI
   class Ticket < Base
   end
 
+  class User < Base
+  end
+
 end
