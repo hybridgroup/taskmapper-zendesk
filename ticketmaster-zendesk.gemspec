@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ticketmaster-zendesk}
-  s.version = "0.1.2"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rafael George"]
-  s.date = %q{2011-04-27}
+  s.date = %q{2011-04-28}
   s.description = %q{Allows ticketmaster to interact with Your System.}
   s.email = %q{george.rafael@gmail.com}
   s.extra_rdoc_files = [
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
     "spec/fixtures/tickets/2.xml",
     "spec/fixtures/tickets/5.xml",
     "spec/fixtures/tickets/create.xml",
+    "spec/fixtures/users/55030073.json",
     "spec/projects_spec.rb",
     "spec/spec.opts",
     "spec/spec_helper.rb",
