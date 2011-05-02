@@ -8,6 +8,8 @@ describe "Ticketmaster::Provider::Zendesk::Comment" do
     headers = {'Authorization' => 'Basic cmFmYWVsQGh5YnJpZGdyb3VwLmNvbToxMjM0NTY=','Accept' => 'application/json'}
     ActiveResource::HttpMock.respond_to do |mock|
       mock.get '/tickets/1.json', headers, fixture_for('ticket','json'), 200
+      mock.get '/users/26218414.json', headers, fixture_for('users/55030073', 'json'), 200
+      mock.get '/users/26220353.json', headers, fixture_for('users/55030073', 'json'), 200
     end
   end
 
