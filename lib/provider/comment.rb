@@ -8,6 +8,8 @@ module TicketMaster::Provider
     class Comment < TicketMaster::Provider::Base::Comment
       # declare needed overloaded methods here
       
+      USER_API = ZendeskAPI::User
+
       def initialize(*object)
         return super(object.first) if object.first.is_a? Hash 
         if object.first
@@ -57,6 +59,7 @@ module TicketMaster::Provider
         comment_id = 0
         ZendeskAPI::Ticket.find(ticket_id).comments.collect do |comment|
           comment_id += 1
+          comment.author_id = USER_API.find(comment.author_id).email
           Comment.new [ticket_id, project_id, comment_id, comment]
         end
       end
