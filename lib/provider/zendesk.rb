@@ -32,5 +32,9 @@ module TicketMaster::Provider
       end
     end
 
+    def valid?
+        ZendeskAPI::Search.find(:first, :params => {:query => "status:open"})
+    end
+
   end
 end
