@@ -12,9 +12,6 @@ begin
     gem.authors = ["Rafael George"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_dependency "ticketmaster", ">= 0.6.0"
-    gem.add_dependency "activesupport", ">= 2.3.2"
-    gem.add_dependency "activeresource", ">= 2.3.2"
-    gem.add_dependency "addressable", ">= 2.1.2"
     gem.add_dependency "i18n"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
