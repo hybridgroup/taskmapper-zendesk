@@ -1,18 +1,18 @@
-require 'ticketmaster'
-module TicketMaster::Provider
-  # This is the Zendesk Provider for ticketmaster
+require 'taskmapper'
+module TaskMapper::Provider
+  # This is the Zendesk Provider for taskmapper
   module Zendesk
-    include TicketMaster::Provider::Base
+    include TaskMapper::Provider::Base
     #PROJECT_API = ZendeskAPI::Organization
     
-    # This is for cases when you want to instantiate using TicketMaster::Provider::Yoursystem.new(auth)
+    # This is for cases when you want to instantiate using TaskMapper::Provider::Yoursystem.new(auth)
     def self.new(auth = {})
-      TicketMaster.new(:zendesk, auth)
+      TaskMapper.new(:zendesk, auth)
     end
     
     # The authorize and initializer for this provider
     def authorize(auth = {})
-      @authentication ||= TicketMaster::Authenticator.new(auth)
+      @authentication ||= TaskMapper::Authenticator.new(auth)
       auth = @authentication
       if (auth.account.nil? and auth.username.nil? and auth.password.nil?)
         raise "Please provide at least an url (subdomain), username and password)"
@@ -28,7 +28,7 @@ module TicketMaster::Provider
       unless options.empty?
         Project.new({:account => @authentication.account, :username => @authentication.username, :name => "#{@authentication.account}-project"})
       else
-        TicketMaster::Provider::Zendesk::Project
+        TaskMapper::Provider::Zendesk::Project
       end
     end
 

@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "Ticketmaster::Provider::Zendesk::Comment" do
+describe TaskMapper::Provider::Zendesk::Comment do
 
   before(:all) do 
     @project_id = 'hybridgroup-project'
@@ -14,10 +14,10 @@ describe "Ticketmaster::Provider::Zendesk::Comment" do
   end
 
   before(:each) do 
-    @ticketmaster = TicketMaster.new(:zendesk, :account => 'hybridgroup', :username => 'rafael@hybridgroup.com', :password => '123456')
-    project = @ticketmaster.project(@project_id)
+    @taskmapper = TaskMapper.new(:zendesk, :account => 'hybridgroup', :username => 'rafael@hybridgroup.com', :password => '123456')
+    project = @taskmapper.project(@project_id)
     @ticket = project.ticket(@ticket_id)
-    @klass = TicketMaster::Provider::Zendesk::Comment
+    @klass = TaskMapper::Provider::Zendesk::Comment
   end
 
   it "should be able to load all comments" do 

@@ -1,9 +1,9 @@
-module TicketMaster::Provider
+module TaskMapper::Provider
   module Zendesk
-    # Project class for ticketmaster-zendesk
+    # Project class for taskmapper-zendesk
     # 
     # 
-    class Project < TicketMaster::Provider::Base::Project
+    class Project < TaskMapper::Provider::Base::Project
 	 attr_accessor :prefix_options
       #API = ZendeskAPI::Organization
       # declare needed overloaded methods here
@@ -45,7 +45,7 @@ module TicketMaster::Provider
         elsif options.first.is_a? Hash
           Ticket.find_by_attributes(self.name, options.first).first
         else
-          TicketMaster::Provider::Zendesk::Ticket
+          TaskMapper::Provider::Zendesk::Ticket
         end
       end
 

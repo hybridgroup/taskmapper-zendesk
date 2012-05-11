@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "Ticketmaster::Provider::Zendesk::Ticket" do
+describe TaskMapper::Provider::Zendesk::Ticket do
 
   before(:all) do
     @project_id = "hybridgroup-project"
@@ -15,9 +15,9 @@ describe "Ticketmaster::Provider::Zendesk::Ticket" do
   end
 
   before(:each) do
-    @ticketmaster = TicketMaster.new(:zendesk, :account => 'hybridgroup', :username => 'rafael@hybridgroup.com', :password => '123456')
-    @klass = TicketMaster::Provider::Zendesk::Ticket
-    @project = @ticketmaster.project(@project_id)
+    @taskmapper = TaskMapper.new(:zendesk, :account => 'hybridgroup', :username => 'rafael@hybridgroup.com', :password => '123456')
+    @klass = TaskMapper::Provider::Zendesk::Ticket
+    @project = @taskmapper.project(@project_id)
   end
 
   it "should be able to load all tickets" do 

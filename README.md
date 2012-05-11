@@ -1,14 +1,14 @@
-# ticketmaster-redmine
+# taskmapper-redmine
 
-This is a provider for [ticketmaster](http://ticketrb.com). It provides interoperability with [Zendesk](http://www.zendesk.com) and it's issue tracking system through the ticketmaster gem.
+This is a provider for [taskmapper](http://ticketrb.com). It provides interoperability with [Zendesk](http://www.zendesk.com) and it's issue tracking system through the taskmapper gem.
 
 Right now this provider only supports reading operations.
 
 # Usage and Examples
 
-First we have to instantiate a new ticketmaster instance:
+First we have to instantiate a new taskmapper instance:
 
-    zendesk = TicketMaster.new(:zendesk, {:account => 'hybridgroup', :username => "foo", :password => "bar"})
+    zendesk = taskmapper.new(:zendesk, {:account => 'hybridgroup', :username => "foo", :password => "bar"})
 
 If you do not pass in account, username and password, you won't get any information.
 
@@ -20,7 +20,7 @@ You can find your own projects by doing:
     projects = zendesk.projects(['your_repo1']) # You must use your projects identifier 
     project = zendesk.project('your_repo') # Also use project identifier in here
 
-Note: Zendesk dosen't support a projects which means this is a ticketmaster place holder object, you will always get the same project name as follows: 'accountname-project'.
+Note: Zendesk dosen't support a projects which means this is a taskmapper place holder object, you will always get the same project name as follows: 'accountname-project'.
 
 	
 ## Finding Tickets
@@ -38,14 +38,14 @@ Note: Zendesk dosen't support a projects which means this is a ticketmaster plac
 ## Requirements
 
 * rubygems (obviously)
-* ticketmaster gem (latest version preferred)
+* taskmapper gem (latest version preferred)
 * jeweler gem (only if you want to repackage and develop)
 
-The ticketmaster gem should automatically be installed during the installation of this gem if it is not already installed.
+The taskmapper gem should automatically be installed during the installation of this gem if it is not already installed.
 
 ## Other Notes
 
-Since this and the ticketmaster gem is still primarily a work-in-progress, minor changes may be incompatible with previous versions. Please be careful about using and updating this gem in production.
+Since this and the taskmapper gem is still primarily a work-in-progress, minor changes may be incompatible with previous versions. Please be careful about using and updating this gem in production.
 
 If you see or find any issues, feel free to open up an issue report.
 

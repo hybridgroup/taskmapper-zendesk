@@ -4,11 +4,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "ticketmaster-zendesk"
-    gem.summary = %Q{Ticketmaster Provider for Zendesk}
-    gem.description = %Q{Allows ticketmaster to interact with Your System.}
+    gem.name = "taskmapper-zendesk"
+    gem.summary = %Q{taskmapper Provider for Zendesk}
+    gem.description = %Q{Allows taskmapper to interact with Your System.}
     gem.email = "rafael@hybridgroup.com"
-    gem.homepage = "http://github.com/hybridgroup/ticketmaster-zendesk"
+    gem.homepage = "http://github.com/hybridgroup/taskmapper-zendesk"
     gem.authors = ["Rafael George"]
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
@@ -35,7 +35,7 @@ Rake::RDocTask.new do |rdoc|
     version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
     rdoc.rdoc_dir = 'rdoc'
-    rdoc.title = "ticketmaster-redmine#{version}"
+    rdoc.title = "taskmapper-redmine#{version}"
     rdoc.rdoc_files.include('README*')
     rdoc.rdoc_files.include('lib/**/*.rb')
 end

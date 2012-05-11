@@ -1,8 +1,8 @@
 
-module TicketMaster::Provider
+module TaskMapper::Provider
   module Zendesk
 
-    class Ticket < TicketMaster::Provider::Base::Ticket
+    class Ticket < TaskMapper::Provider::Base::Ticket
       # declare needed overloaded methods here
 
       SEARCH_API = ZendeskAPI::Search
