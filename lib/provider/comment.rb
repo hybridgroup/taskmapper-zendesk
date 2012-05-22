@@ -50,6 +50,10 @@ module TaskMapper::Provider
           end
         end
 
+        def find_by_id(project_id, ticket_id, id) 
+          search(project_id, ticket_id).find { |ticket| ticket.id == id } 
+        end
+
         def find_by_attributes(project_id, ticket_id, attributes = {})
           search_by_attribute(self.search(project_id, ticket_id), attributes)
         end

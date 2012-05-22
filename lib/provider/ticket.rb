@@ -1,7 +1,5 @@
-
 module TaskMapper::Provider
   module Zendesk
-
     class Ticket < TaskMapper::Provider::Base::Ticket
       # declare needed overloaded methods here
 
@@ -39,7 +37,7 @@ module TaskMapper::Provider
       end
 
       class << self
-        def find_all(project_id)
+        def search(project_id)
           SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
             ticket.requester_id = requestor(ticket)
             ticket.assignee_id = assignee(ticket)
@@ -52,7 +50,7 @@ module TaskMapper::Provider
         end
 
         def find_by_attributes(project_id, attributes = {})
-          search_by_attribute(self.find_all(project_id), attributes)
+          search_by_attribute(self.search(project_id), attributes)
         end
 
         private
@@ -68,7 +66,6 @@ module TaskMapper::Provider
           API.find ticket_id
         end
       end
-
     end
   end
 end
