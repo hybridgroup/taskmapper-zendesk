@@ -9,28 +9,16 @@ module TaskMapper::Provider
       API = ZendeskAPI::Ticket
       USER_API = ZendeskAPI::User
 
-      def initialize(*object)
-        return super(object.first) if object.first.is_a? Hash 
-        if object.first 
-          args = object.first
-          object = args.shift
-          project_id = args.shift
-          @system_data = {:client => object}
-          unless object.is_a? Hash
-            hash = {:id => object.nice_id,
-                    :status => object.status_id,
-                    :title => object.subject,
-                    :created_at => object.created_at,
-                    :updated_at => object.updated_at,
-                    :description => object.description,
-                    :assignee => object.assignee_id,
-                    :requestor => object.requester_id,
-                    :priority => object.priority_id,
-                    :project_id => project_id}
-          else
-            hash = object
-          end
-          super hash
+      def initialize(*object) 
+        @system_data = {}
+        @cache = {}
+        first = object.shift
+        case first 
+        when Hash
+          super first.to_hash
+        else
+          @system_data[:client] = first
+          super first.attributes
         end
       end
 
@@ -40,22 +28,6 @@ module TaskMapper::Provider
 
       def updated_at
         Time.parse(self[:updated_at])
-      end
-
-      def self.find_all(project_id)
-        SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
-          ticket.requester_id = requestor(ticket)
-          ticket.assignee_id = assignee(ticket)
-          self.new([ticket, project_id])
-        end
-      end
-
-      def self.find_by_id(project_id, ticket_id)
-        self.new [API.find(ticket_id), project_id]
-      end
-
-      def self.find_by_attributes(project_id, attributes = {})
-        search_by_attribute(self.find_all(project_id), attributes)
       end
 
       def comments(*options)
@@ -70,16 +42,37 @@ module TaskMapper::Provider
         end
       end
 
-      private
-      def self.requestor(ticket)
-        USER_API.find(ticket.requester_id).email
-      end
+      class << self
+        def find_all(project_id)
+          SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
+            ticket.requester_id = requestor(ticket)
+            ticket.assignee_id = assignee(ticket)
+            self.new ticket.attributes.merge! :project_id => project_id
+          end
+        end
 
-      def self.assignee(ticket)
-        USER_API.find(ticket.assignee_id).email
+        def find_by_id(project_id, ticket_id)
+          self.new zendesk_ticket(ticket_id).attributes.merge! :project_id => project_id
+        end
+
+        def find_by_attributes(project_id, attributes = {})
+          search_by_attribute(self.find_all(project_id), attributes)
+        end
+
+        private
+        def requestor(ticket)
+          USER_API.find(ticket.requester_id).email
+        end
+
+        def assignee(ticket)
+          USER_API.find(ticket.assignee_id).email
+        end
+
+        def zendesk_ticket(ticket_id)
+          API.find ticket_id
+        end
       end
 
     end
-
   end
 end

@@ -12,6 +12,7 @@ describe TaskMapper::Provider::Zendesk::Ticket do
     before(:each) do 
       ActiveResource::HttpMock.respond_to do |mock|
         mock.get '/api/v1/search.json?query=status%3Aopen', headers, fixture_for('tickets'), 200
+        mock.get '/api/v1/tickets/1.json', headers, fixture_for('tickets/1'), 200
         mock.get '/api/v1/users/26218414.json', headers, fixture_for('users/55030073'), 200
         mock.get '/api/v1/users/26220353.json', headers, fixture_for('users/55030073'), 200
       end
@@ -19,6 +20,12 @@ describe TaskMapper::Provider::Zendesk::Ticket do
     
     context "when calling #tickets" do 
       subject { project.tickets } 
+      it { should be_an_instance_of Array }
+      it { subject.first.should be_an_instance_of ticket_class }
+    end
+
+    context "when calling #tickets with array of id's" do 
+      subject { project.tickets([1]) } 
       it { should be_an_instance_of Array }
       it { subject.first.should be_an_instance_of ticket_class }
     end
