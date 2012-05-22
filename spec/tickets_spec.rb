@@ -42,19 +42,12 @@ describe TaskMapper::Provider::Zendesk::Ticket do
          it { should be_an_instance_of ticket_class }
          it { subject.title.should == "Testing" }
        end
+
+       context "when calling #ticket with a hash attribute" do 
+         subject { project.ticket :id => 1 }
+         it { should be_an_instance_of ticket_class }
+         it { subject.title.should == "Testing" }
+       end
     end
   end
-
-  it "should be able to find a ticket by attributes" do 
-    pending
-    ticket = @project.ticket(:id => 1)
-    ticket.should be_an_instance_of(@klass)
-    ticket.title.should == "Testing"
-  end
-
-  it "should return the ticket class without parameter in the ticket method" do
-    pending
-    @project.ticket.should == @klass
-  end
-
 end
