@@ -25,31 +25,24 @@ describe TaskMapper::Provider::Zendesk::Ticket do
     end
 
     context "when calling #tickets with array of id's" do 
-      subject { project.tickets([1]) } 
+      subject { project.tickets [1] } 
       it { should be_an_instance_of Array }
       it { subject.first.should be_an_instance_of ticket_class }
     end
 
     context "when calling #tickets with a hash attributes" do 
-      subject { project.tickets(:id => 1) }
+      subject { project.tickets :id => 1 }
       it { should be_an_instance_of Array } 
       it { subject.first.should be_an_instance_of ticket_class }
     end
-  end
 
-  it "should be able to load all tickets based on attributes" do
-    pending
-    tickets = @project.tickets(:id => 1)
-    tickets.should be_an_instance_of(Array)
-    tickets.first.should be_an_instance_of(@klass)
-    tickets.first.title.should == "Testing"
-  end
-
-  it "should be able to load a single ticket" do
-    pending
-    ticket = @project.ticket(1)
-    ticket.should be_an_instance_of(@klass)
-    ticket.title.should == "Testing"
+    describe "Retrieving a single ticket" do 
+       context "when calling #ticket to a project instance" do 
+         subject { project.ticket 1 }
+         it { should be_an_instance_of ticket_class }
+         it { subject.title.should == "Testing" }
+       end
+    end
   end
 
   it "should be able to find a ticket by attributes" do 

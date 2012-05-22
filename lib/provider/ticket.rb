@@ -26,6 +26,10 @@ module TaskMapper::Provider
         self.nice_id
       end
 
+      def title
+        self.subject
+      end
+
       def created_at
         Time.parse(self[:created_at])
       end
