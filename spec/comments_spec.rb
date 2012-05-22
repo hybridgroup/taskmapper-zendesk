@@ -25,29 +25,28 @@ describe TaskMapper::Provider::Zendesk::Comment do
     context "when calling #comments with an array of id" do 
       subject { ticket.comments [1] }
       it { should be_an_instance_of Array }
+      it { subject.first.should be_an_instance_of comment_class }
     end
-  end
 
-  it "should be able to load all comments based on attributes" do
-    pending
-    comments = @ticket.comments(:ticket_id => @ticket.id)
-    comments.should be_an_instance_of(Array)
-    comments.first.should be_an_instance_of(@klass)
-    comments.first.id.should == 1
-  end
+    context "when calling #comments with a hash of attributes" do 
+      subject { ticket.comments :ticket_id => ticket.id }
+      it { should be_an_instance_of Array }
+      it { subject.first.should be_an_instance_of comment_class }
+    end
 
-  it "should be able to load a comment based on id" do
-    pending
-    comment = @ticket.comment(1)
-    comment.should be_an_instance_of(@klass)
-    comment.id.should == 1
-  end
+    describe "Retrieve a single comment" do 
+      context "when calling #comment with an id to a ticket instance" do 
+        subject { ticket.comment 1 }
+        it { should be_an_instance_of comment_class }
+        it { subject.id.should == 1 }
+      end
 
-  it "should be able to load a ticket based on attributes" do 
-    pending
-    comment = @ticket.comment(:ticket_id => 1)
-    comment.should be_an_instance_of(@klass)
-    comment.id.should == 1
+      context "when calling #comment with a hash attributes to a ticket instance" do 
+        subject { ticket.comment :ticket_id => 1 }
+        it { should be_an_instance_of comment_class }
+        it { subject.id.should == 1 }
+      end
+    end
   end
 
 end
