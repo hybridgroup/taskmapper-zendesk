@@ -12,7 +12,7 @@ module ZendeskAPI
       @password = password
       self::Base.user = username
       self::Base.password = password
-      self::Base.site = "http://#{account}.zendesk.com"
+      self::Base.site = "https://#{account}.zendesk.com/api/v1/"
     end
 
     def resources

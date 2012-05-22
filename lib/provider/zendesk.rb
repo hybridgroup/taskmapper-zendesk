@@ -4,12 +4,12 @@ module TaskMapper::Provider
   module Zendesk
     include TaskMapper::Provider::Base
     #PROJECT_API = ZendeskAPI::Organization
-    
+
     # This is for cases when you want to instantiate using TaskMapper::Provider::Yoursystem.new(auth)
     def self.new(auth = {})
       TaskMapper.new(:zendesk, auth)
     end
-    
+
     # The authorize and initializer for this provider
     def authorize(auth = {})
       @authentication ||= TaskMapper::Authenticator.new(auth)
@@ -33,7 +33,7 @@ module TaskMapper::Provider
     end
 
     def valid?
-        ZendeskAPI::Search.find(:first, :params => {:query => "status:open"})
+      ZendeskAPI::Search.find(:first, :params => {:query => "status:open"})
     end
 
   end
