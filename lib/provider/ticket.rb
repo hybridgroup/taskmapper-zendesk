@@ -42,17 +42,6 @@ module TaskMapper::Provider
         Time.parse(self[:updated_at])
       end
 
-      def self.find(project_id, *options)
-        tickets = self.find_all(project_id)
-        if options[0].first.is_a? Array
-          Ticket.find_all(self.name).select { |ticket| ticket if options[0].first.any? { |ticket_id| ticket_id == ticket.id }}
-        elsif options[0].first.is_a? Hash
-          Ticket.find_by_attributes(self.name, options[0].first)
-        else
-          tickets
-        end
-      end
-
       def self.find_all(*options)
         project_id = options.first
         SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
