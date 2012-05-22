@@ -12,6 +12,8 @@ describe TaskMapper::Provider::Zendesk::Ticket do
     before(:each) do 
       ActiveResource::HttpMock.respond_to do |mock|
         mock.get '/api/v1/search.json?query=status%3Aopen', headers, fixture_for('tickets'), 200
+        mock.get '/api/v1/users/26218414.json', headers, fixture_for('users/55030073'), 200
+        mock.get '/api/v1/users/26220353.json', headers, fixture_for('users/55030073'), 200
       end
     end
     
