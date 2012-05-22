@@ -42,8 +42,7 @@ module TaskMapper::Provider
         Time.parse(self[:updated_at])
       end
 
-      def self.find_all(*options)
-        project_id = options.first
+      def self.find_all(project_id)
         SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
           ticket.requester_id = requestor(ticket)
           ticket.assignee_id = assignee(ticket)
