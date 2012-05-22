@@ -29,15 +29,12 @@ describe TaskMapper::Provider::Zendesk::Ticket do
       it { should be_an_instance_of Array }
       it { subject.first.should be_an_instance_of ticket_class }
     end
-  end
 
-  it "should be able to load all tickets based on an array of id's" do 
-    pending
-    tickets = @project.tickets([1])
-    tickets.should be_an_instance_of(Array)
-    tickets.first.should be_an_instance_of(@klass)
-    tickets.size.should == 1
-    tickets.first.title.should == "Testing"
+    context "when calling #tickets with a hash attributes" do 
+      subject { project.tickets(:id => 1) }
+      it { should be_an_instance_of Array } 
+      it { subject.first.should be_an_instance_of ticket_class }
+    end
   end
 
   it "should be able to load all tickets based on attributes" do
