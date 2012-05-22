@@ -33,8 +33,11 @@ module TaskMapper::Provider
     end
 
     def valid?
-      ZendeskAPI::Search.find(:first, :params => {:query => "status:open"})
+      begin
+        !ZendeskAPI::Search.find(:first, :params => {:query => "status:open"}).nil?
+      rescue
+        false
+      end
     end
-
   end
 end
