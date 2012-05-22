@@ -48,5 +48,4 @@ describe TaskMapper::Provider::Zendesk::Comment do
       end
     end
   end
-
 end
