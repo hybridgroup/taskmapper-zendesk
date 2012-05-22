@@ -3,7 +3,6 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe TaskMapper::Provider::Zendesk::Comment do
 
   let(:project_id) { 'hybridgroup-project' }
-  let(:ticket_id) { 1 }
   let(:headers) { {'Authorization' => 'Basic cmFmYWVsQGh5YnJpZGdyb3VwLmNvbToxMjM0NTY=','Accept' => 'application/json'} }
   let(:tm) { TaskMapper.new(:zendesk, :account => 'hybridgroup', :username => 'rafael@hybridgroup.com', :password => '123456') }
   let(:project) { tm.project(project_id) }
@@ -12,12 +11,14 @@ describe TaskMapper::Provider::Zendesk::Comment do
 
   describe "Retrieving comments" do 
     before(:each) do 
-
+      ActiveResource::HttpMock.respond_to do |mock|
+        mock.get '/api/v1/tickets/2.json', headers, fixture_for('tickets/2'), 200
+      end
+      @ticket = project.ticket(2)
     end
-    let(:ticket) { project.ticket(ticket_id) }
 
     context "when calling #comments to a ticket instance" do 
-      subject { ticket.comments } 
+      subject { @ticket.comments } 
       it { should be_an_instance_of Array }
       it { subject.first.should be_an_instance_of comment_class }
     end

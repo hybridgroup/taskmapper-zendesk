@@ -7,7 +7,7 @@ module TaskMapper::Provider
     #
     class Comment < TaskMapper::Provider::Base::Comment
       # declare needed overloaded methods here
-      
+
       USER_API = ZendeskAPI::User
 
       def initialize(*object)
@@ -39,21 +39,21 @@ module TaskMapper::Provider
         Time.parse(self[:updated_at])
       end
 
-      def self.find_all(project_id, ticket_id)
-        comment_id = 0
-        ZendeskAPI::Ticket.find(ticket_id).comments.collect do |comment|
-          comment_id += 1
-          self.new comment.attributes.merge!(:project_id => project_id,
-                                             :ticket_id => ticket_id,
-                                             :comment_id => comment_id)
+      class << self
+        def search(project_id, ticket_id, options = {}, limit = 1000)
+          comment_id = 0
+          ZendeskAPI::Ticket.find(ticket_id).comments.collect do |comment|
+            comment_id += 1
+            self.new comment.attributes.merge!(:project_id => project_id,
+                                               :ticket_id => ticket_id,
+                                               :comment_id => comment_id)
+          end
+        end
+
+        def find_by_attributes(project_id, ticket_id, attributes = {})
+          search_by_attribute(self.search(project_id, ticket_id), attributes)
         end
       end
-
-      def self.find_by_attributes(project_id, ticket_id, attributes = {})
-       search_by_attribute(self.find_all(project_id, ticket_id), attributes)
-      end
-
     end
-
   end
 end

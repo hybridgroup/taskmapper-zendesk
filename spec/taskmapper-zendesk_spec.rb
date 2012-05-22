@@ -5,7 +5,7 @@ describe "TaskMapper::Provider::Zendesk" do
     @taskmapper = TaskMapper.new(:zendesk, {:account => 'taskmapper', :username => 'foo', :password => '000000'})
     headers = {'Authorization' => 'Basic Zm9vOjAwMDAwMA==','Accept' => 'application/json'}
     ActiveResource::HttpMock.respond_to do |mock|
-      mock.get '/search.json?query=status%3Aopen', headers, fixture_for('tickets', 'json'), 200
+      mock.get '/api/v1/search.json?query=status%3Aopen', headers, fixture_for('tickets', 'json'), 200
     end
 
   end
