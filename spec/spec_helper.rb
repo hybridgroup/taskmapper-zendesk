@@ -11,6 +11,6 @@ RSpec.configure do |config|
   
 end
 
-def fixture_for(name, format = 'xml')
+def fixture_for(name, format = 'json')
   File.read(File.dirname(__FILE__) + '/fixtures/' + name + ".#{format}")
 end
