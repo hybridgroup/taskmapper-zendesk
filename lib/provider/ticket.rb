@@ -38,18 +38,6 @@ module TaskMapper::Provider
         Time.parse(self[:updated_at])
       end
 
-      def comments(*options)
-        Comment.find(project_id, id, options)
-      end
-
-      def comment(*options)
-        if options.first.is_a? Fixnum
-          Comment.find(project_id, id, [options.first]).first
-        elsif options.first.is_a? Hash
-          Comment.find_by_attributes(project_id, id, options.first).first
-        end
-      end
-
       class << self
         def find_all(project_id)
           SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
