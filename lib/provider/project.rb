@@ -46,7 +46,7 @@ module TaskMapper::Provider
       end
 
       def ticket!(*options)
-        Ticket.new ZendeskAPI::Ticket.create(options.first), self.name
+        Ticket.create options.first
       end
 
     end

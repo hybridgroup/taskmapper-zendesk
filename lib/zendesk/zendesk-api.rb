@@ -30,7 +30,6 @@ module ZendeskAPI
   end
 
   class Search < Base
-
     def self.collection_path(prefix_options = {}, query_options = nil) 
       prefix_options, query_options = split_options(prefix_options) if query_options.nil?
       "#{prefix(prefix_options)}search.#{format.extension}#{query_string(query_options)}"
@@ -40,7 +39,6 @@ module ZendeskAPI
       prefix_options, query_options = split_options(prefix_options) if query_options.nil?
       "#{prefix(prefix_options)}search.#{format.extension}#{query_string(query_options)}"
     end
-
   end
 
   class Ticket < Base

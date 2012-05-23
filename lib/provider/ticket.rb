@@ -53,6 +53,10 @@ module TaskMapper::Provider
           search_by_attribute(self.search(project_id), attributes)
         end
 
+        def create(options)
+          super translate options, {:title => :description}
+        end
+
         private
         def requestor(ticket)
           USER_API.find(ticket.requester_id).email
@@ -65,6 +69,19 @@ module TaskMapper::Provider
         def zendesk_ticket(ticket_id)
           API.find ticket_id
         end
+
+        def translate(hash, mapping) 
+          Hash[hash.map { |k, v| [mapping[k] ||= k, v]}]
+        end
+      end
+    end
+
+    class Net::HTTP
+      def send(*args)
+        p "<<sending #{args.inspect}"
+        r = super *args
+        p "<<response #{r.inspect}"
+        r
       end
     end
   end
