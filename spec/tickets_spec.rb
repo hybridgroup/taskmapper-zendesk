@@ -7,6 +7,7 @@ describe TaskMapper::Provider::Zendesk::Ticket do
   let(:ticket_class) {  TaskMapper::Provider::Zendesk::Ticket }
   let(:project) { tm.project(project_id) } 
   let(:headers) { {'Authorization' => 'Basic cmFmYWVsQGh5YnJpZGdyb3VwLmNvbToxMjM0NTY=','Accept' => 'application/json'} }
+  let(:post_headers) { {'Authorization' => 'Basic cmFmYWVsQGh5YnJpZGdyb3VwLmNvbToxMjM0NTY=','Content-Type' => 'application/json'} }
 
   describe "Retrieving tickets" do 
     before(:each) do 
@@ -17,7 +18,7 @@ describe TaskMapper::Provider::Zendesk::Ticket do
         mock.get '/api/v1/users/26220353.json', headers, fixture_for('users/55030073'), 200
       end
     end
-    
+
     context "when calling #tickets" do 
       subject { project.tickets } 
       it { should be_an_instance_of Array }
@@ -37,17 +38,31 @@ describe TaskMapper::Provider::Zendesk::Ticket do
     end
 
     describe "Retrieving a single ticket" do 
-       context "when calling #ticket to a project instance" do 
-         subject { project.ticket 1 }
-         it { should be_an_instance_of ticket_class }
-         it { subject.title.should == "Testing" }
-       end
+      context "when calling #ticket to a project instance" do 
+        subject { project.ticket 1 }
+        it { should be_an_instance_of ticket_class }
+        it { subject.title.should == "Testing" }
+      end
 
-       context "when calling #ticket with a hash attribute" do 
-         subject { project.ticket :id => 1 }
-         it { should be_an_instance_of ticket_class }
-         it { subject.title.should == "Testing" }
-       end
+      context "when calling #ticket with a hash attribute" do 
+        subject { project.ticket :id => 1 }
+        it { should be_an_instance_of ticket_class }
+        it { subject.title.should == "Testing" }
+      end
+    end
+  end
+
+  describe "Create and update" do 
+    before(:each) do 
+      ActiveResource::HttpMock.respond_to do |mock|
+        mock.post '/api/v1/tickets.json', post_headers, fixture_for('ticket'), 201 
+      end
+    end
+
+    context "when #calling #ticket! to a project instance" do 
+      subject { project.ticket! :title => 'Testing' }
+      it { should be_an_instance_of ticket_class }
+      it { subject.title.should == 'Testing' }
     end
   end
 end
