@@ -5,7 +5,7 @@ module TaskMapper::Provider
 
       SEARCH_API = ZendeskAPI::Search
       API = ZendeskAPI::Ticket
-      USER_API = ZendeskAPI::User
+      ZENDESK_USER = ZendeskAPI::User
 
       def initialize(*object) 
         @system_data = {}
@@ -39,8 +39,8 @@ module TaskMapper::Provider
       class << self
         def search(project_id)
           SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
-            ticket.requester_id = requestor(ticket)
-            ticket.assignee_id = assignee(ticket)
+            ticket.requestor = requestor(ticket)
+            ticket.assignee = assignee(ticket)
             self.new ticket.attributes.merge! :project_id => project_id
           end
         end
@@ -54,16 +54,17 @@ module TaskMapper::Provider
         end
 
         def create(options)
-          super translate options, {:title => :description}
+          zendesk_ticket = ZendeskAPI::Request.new translate options, {:title => :subject}
+          self.new zendesk_ticket
         end
 
         private
         def requestor(ticket)
-          USER_API.find(ticket.requester_id).email
+          ZENDESK_USER.find(ticket.requester_id).email
         end
 
         def assignee(ticket)
-          USER_API.find(ticket.assignee_id).email
+          ZENDESK_USER.find(ticket.assignee_id).email
         end
 
         def zendesk_ticket(ticket_id)
