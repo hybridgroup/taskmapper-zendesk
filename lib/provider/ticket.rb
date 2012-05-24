@@ -29,11 +29,11 @@ module TaskMapper::Provider
       end
 
       def created_at
-        Time.parse(self[:created_at])
+        format_date self[:created_at]
       end
 
       def updated_at
-        Time.parse(self[:updated_at])
+        format_date self[:updated_at]
       end
 
       class << self
@@ -54,11 +54,16 @@ module TaskMapper::Provider
         end
 
         def create(options)
-          zendesk_ticket = ZendeskAPI::Request.new translate options, {:title => :subject}
-          self.new zendesk_ticket
+          self.new create_zendesk_ticket(options)
         end
 
         private
+        def create_zendesk_ticket(options)
+          ticket = API.new translate options, {:title => :description}
+          ticket.save
+          ticket
+        end
+
         def requestor(ticket)
           ZENDESK_USER.find(ticket.requester_id).email
         end
@@ -73,6 +78,15 @@ module TaskMapper::Provider
 
         def translate(hash, mapping) 
           Hash[hash.map { |k, v| [mapping[k] ||= k, v]}]
+        end
+      end
+
+      private
+      def format_date(date) 
+        begin
+          Time.parse(date)
+        rescue
+          date
         end
       end
     end

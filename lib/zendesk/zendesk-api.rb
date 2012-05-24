@@ -49,5 +49,4 @@ module ZendeskAPI
 
   class User < Base
   end
-
 end

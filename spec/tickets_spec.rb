@@ -14,6 +14,7 @@ describe TaskMapper::Provider::Zendesk::Ticket do
       ActiveResource::HttpMock.respond_to do |mock|
         mock.get '/api/v1/search.json?query=status%3Aopen', headers, fixture_for('tickets'), 200
         mock.get '/api/v1/tickets/1.json', headers, fixture_for('tickets/1'), 200
+        mock.get '/api/v1/tickets/3.json', headers, fixture_for('tickets/3'), 200
         mock.get '/api/v1/users/26218414.json', headers, fixture_for('users/55030073'), 200
         mock.get '/api/v1/users/26220353.json', headers, fixture_for('users/55030073'), 200
       end
@@ -49,6 +50,13 @@ describe TaskMapper::Provider::Zendesk::Ticket do
         it { should be_an_instance_of ticket_class }
         it { subject.title.should == "Testing" }
       end
+
+      context "when calling #ticket without created_at or updated_at" do 
+        subject { project.ticket 3 }
+        it { should be_an_instance_of ticket_class }
+        it { subject.created_at.should be_nil }
+        it { subject.updated_at.should be_nil }
+      end
     end
   end
 
@@ -62,7 +70,7 @@ describe TaskMapper::Provider::Zendesk::Ticket do
     context "when #calling #ticket! to a project instance" do 
       subject { project.ticket! :title => 'Testing' }
       it { should be_an_instance_of ticket_class }
-      it { subject.title.should == 'Testing' }
+      it { subject.description.should == 'Testing' }
     end
   end
 end
