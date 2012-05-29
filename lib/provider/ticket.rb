@@ -7,16 +7,10 @@ module TaskMapper::Provider
       API = ZendeskAPI::Ticket
       ZENDESK_USER = ZendeskAPI::User
 
-      def initialize(*object) 
-        @system_data = {}
-        @cache = {}
-        first = object.shift
-        case first 
-        when Hash
-          super first.to_hash
-        else
-          @system_data[:client] = first
-          super first.attributes
+      def initialize(*args) 
+        case args.first
+        when Hash then super args.first
+        else raise ArgumentError.new
         end
       end
 
@@ -36,6 +30,28 @@ module TaskMapper::Provider
         format_date self[:updated_at]
       end
 
+      def save 
+        if to_zendesk_ticket.new? 
+          puts "aqui"
+          to_zendesk_ticket.save 
+        else 
+          update
+        end
+      end
+
+      private
+      def format_date(date) 
+        begin
+          Time.parse(date)
+        rescue
+          date
+        end
+      end
+
+      def to_zendesk_ticket
+        API.new.update_with(self)
+      end
+
       class << self
         def search(project_id)
           SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
@@ -53,17 +69,12 @@ module TaskMapper::Provider
           search_by_attribute(self.search(project_id), attributes)
         end
 
-        def create(options)
-          self.new create_zendesk_ticket(options)
+        def create(attributes)
+          ticket = self.new attributes
+          ticket if ticket.save
         end
 
         private
-        def create_zendesk_ticket(options)
-          ticket = API.new translate options, {:title => :description}
-          ticket.save
-          ticket
-        end
-
         def requestor(ticket)
           ZENDESK_USER.find(ticket.requester_id).email
         end
@@ -81,14 +92,6 @@ module TaskMapper::Provider
         end
       end
 
-      private
-      def format_date(date) 
-        begin
-          Time.parse(date)
-        rescue
-          date
-        end
-      end
     end
 
     class Net::HTTP
