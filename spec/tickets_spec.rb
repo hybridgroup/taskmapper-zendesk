@@ -72,7 +72,7 @@ describe TaskMapper::Provider::Zendesk::Ticket do
     context "when calling #ticket! to a project instance" do 
       subject { project.ticket! :title => 'Testing' }
       it { should be_an_instance_of ticket_class }
-      it { subject.description.should == 'Testing' }
+      it { subject.title.should == 'Testing' }
     end
 
     context "when calling #save to a ticket" do 

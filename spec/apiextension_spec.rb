@@ -11,4 +11,9 @@ describe "Extending ZendeskAPI::Ticket" do
     subject { ZendeskAPI::Ticket.new.update_with(ticket) }
     it { should be_an_instance_of ZendeskAPI::Ticket }
   end
+
+  context "calling #to_ticket_hash" do 
+    subject { ZendeskAPI::Ticket.new.respond_to? :to_ticket_hash } 
+    it { should be_true }
+  end
 end

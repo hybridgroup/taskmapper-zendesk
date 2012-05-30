@@ -5,21 +5,22 @@ module TaskMapper::Provider
 
       SEARCH_API = ZendeskAPI::Search
       API = ZendeskAPI::Ticket
-      ZENDESK_USER = ZendeskAPI::User
-
+      
       def initialize(*args) 
-        case args.first
-        when Hash then super args.first
+        ticket = args.first
+        case ticket
+        when Hash then super ticket
+        when ZendeskAPI::Ticket then super ticket.to_ticket_hash
         else raise ArgumentError.new
         end
       end
 
       def id 
-        self.nice_id
+        self[:nice_id]
       end
 
       def title
-        self.subject
+        self[:subject].nil? ? self[:title] : self[:subject]
       end
 
       def created_at
@@ -30,9 +31,12 @@ module TaskMapper::Provider
         format_date self[:updated_at]
       end
 
+      def new?
+        id.nil?
+      end
+
       def save 
-        if to_zendesk_ticket.new? 
-          puts "aqui"
+        if new? 
           to_zendesk_ticket.save 
         else 
           update
@@ -52,17 +56,25 @@ module TaskMapper::Provider
         API.new.update_with(self)
       end
 
+      def find_zendesk_ticket
+        t = API.find id 
+        raise TaskMapper::Exception.new "Ticket with #{id} not found" unless t
+        t
+      end
+
+      def update
+        find_zendesk_ticket.update_with(self).save
+      end
+
       class << self
         def search(project_id)
           SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
-            ticket.requestor = requestor(ticket)
-            ticket.assignee = assignee(ticket)
             self.new ticket.attributes.merge! :project_id => project_id
           end
         end
 
         def find_by_id(project_id, ticket_id)
-          self.new zendesk_ticket(ticket_id).attributes.merge! :project_id => project_id
+          self.new API.find(ticket_id).attributes.merge! :project_id => project_id
         end
 
         def find_by_attributes(project_id, attributes = {})
@@ -72,23 +84,6 @@ module TaskMapper::Provider
         def create(attributes)
           ticket = self.new attributes
           ticket if ticket.save
-        end
-
-        private
-        def requestor(ticket)
-          ZENDESK_USER.find(ticket.requester_id).email
-        end
-
-        def assignee(ticket)
-          ZENDESK_USER.find(ticket.assignee_id).email
-        end
-
-        def zendesk_ticket(ticket_id)
-          API.find ticket_id
-        end
-
-        def translate(hash, mapping) 
-          Hash[hash.map { |k, v| [mapping[k] ||= k, v]}]
         end
       end
 
