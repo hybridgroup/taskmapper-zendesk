@@ -19,6 +19,7 @@ module TaskMapper::Provider
         self[:nice_id]
       end
 
+      # FIXME: This is kinda ugly
       def title
         self[:subject].nil? ? self[:title] : self[:subject]
       end
