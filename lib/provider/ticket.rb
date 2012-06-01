@@ -15,8 +15,8 @@ module TaskMapper::Provider
         end
       end
 
-      def id 
-        self[:nice_id]
+      def id
+        self[:nice_id].nil? ? self[:id] : self[:nice_id]
       end
 
       # FIXME: This is kinda ugly
@@ -31,7 +31,7 @@ module TaskMapper::Provider
       def updated_at
         format_date self[:updated_at]
       end
-
+      
       def new?
         id.nil?
       end
@@ -54,7 +54,7 @@ module TaskMapper::Provider
       end
 
       def to_zendesk_ticket
-        API.new.update_with(self)
+         API.new.update_with(self)
       end
 
       def find_zendesk_ticket
@@ -64,7 +64,11 @@ module TaskMapper::Provider
       end
 
       def update
-        find_zendesk_ticket.update_with(self).save
+        t = find_zendesk_ticket
+        puts "DBG: #{t.inspect}"
+        t = t.update_with(self)
+        puts "DBG: #{t.inspect}"
+        t.save
       end
 
       class << self
@@ -88,6 +92,15 @@ module TaskMapper::Provider
         end
       end
 
+    end
+
+    class Net::HTTP
+      def send(*args)
+        p "<<sending #{args.inspect}"
+        r = super *args
+        p "<<response #{r.inspect}"
+        r
+      end
     end
   end
 end
