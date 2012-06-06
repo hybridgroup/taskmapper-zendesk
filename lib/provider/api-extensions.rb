@@ -2,8 +2,9 @@ class ZendeskAPI::Ticket
   ZENDESK_USER = ZendeskAPI::User
 
   def update_with(ticket)
-    self.description = ticket.title
-    self.subject = ticket.title
+    self.description = ticket.description
+    self.nice_id = ticket.id
+    self.id = ticket.id
     self
   end
 

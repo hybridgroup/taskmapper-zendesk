@@ -65,7 +65,7 @@ describe TaskMapper::Provider::Zendesk::Ticket do
       ActiveResource::HttpMock.respond_to do |mock|
         mock.post '/api/v1/tickets.json', post_headers, fixture_for('ticket'), 201 
         mock.get '/api/v1/tickets/1.json', headers, fixture_for('tickets/1'), 200
-        mock.put '/api/v1/tickets/2.json', post_headers, '', 201
+        mock.put '/api/v1/tickets/1.json', post_headers, '', 201
       end
     end
 
