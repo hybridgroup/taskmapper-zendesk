@@ -31,6 +31,10 @@ module TaskMapper::Provider
         self.comment_id
       end
 
+      def body
+
+      end
+
       def created_at
         Time.parse(self[:created_at])
       end

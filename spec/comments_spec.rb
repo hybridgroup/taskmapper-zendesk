@@ -39,6 +39,10 @@ describe TaskMapper::Provider::Zendesk::Comment do
         subject { ticket.comment 1 }
         it { should be_an_instance_of comment_class }
         it { subject.id.should == 1 }
+        it { subject.body.should_not be_nil }
+        it { subject.author.should_not be_nil }
+        it { subject.created_at.should_not be_nil }
+        it { subject.updated_at.should_not be_nil }
       end
 
       context "when calling #comment with a hash attributes to a ticket instance" do 
