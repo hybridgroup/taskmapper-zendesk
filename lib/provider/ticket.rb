@@ -90,14 +90,5 @@ module TaskMapper::Provider
         end
       end
     end
-
-    class Net::HTTP
-      def send(*args)
-        p "<<sending #{args.inspect}"
-        r = super *args
-        p "<<response #{r.inspect}"
-        r
-      end
-    end
   end
 end
