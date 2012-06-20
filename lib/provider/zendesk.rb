@@ -5,6 +5,10 @@ module TaskMapper::Provider
     include TaskMapper::Provider::Base
     #PROJECT_API = ZendeskAPI::Organization
 
+    class << self
+      attr_accessor :api
+    end
+
     # This is for cases when you want to instantiate using TaskMapper::Provider::Yoursystem.new(auth)
     def self.new(auth = {})
       TaskMapper.new(:zendesk, auth)
@@ -17,7 +21,11 @@ module TaskMapper::Provider
       if (auth.account.nil? and auth.username.nil? and auth.password.nil?)
         raise "Please provide at least an url (subdomain), username and password)"
       end
-      ZendeskAPI.authenticate(auth.account, auth.username, auth.password)
+      TaskMapper::Provider::Zendesk.api = ZendeskAPI::Client.new do |config|
+        config.url = "https://#{auth.account}.zendesk.com/api/v2/"
+        config.username = auth.username
+        config.password = auth.password
+      end
     end
 
     def projects(*options)
