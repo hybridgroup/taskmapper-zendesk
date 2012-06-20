@@ -1,3 +1,16 @@
+GIT
+  remote: http://github.com/zendesk/zendesk_api_client_rb.git
+  revision: a71268a8089b1cd65dc106b5064196851ad52e97
+  specs:
+    zendesk_api (0.0.6)
+      faraday (>= 0.8.0)
+      faraday_middleware (>= 0.8.7)
+      hashie
+      inflection
+      json
+      mime-types
+      multipart-post
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -12,14 +25,22 @@ GEM
       multi_json (~> 1.0)
     builder (3.0.0)
     diff-lcs (1.1.3)
+    faraday (0.8.1)
+      multipart-post (~> 1.1)
+    faraday_middleware (0.8.7)
+      faraday (>= 0.7.4, < 0.9)
     git (1.2.5)
     hashie (1.2.0)
     i18n (0.6.0)
+    inflection (1.0.0)
     jeweler (1.6.4)
       bundler (~> 1.0)
       git (>= 1.2.5)
       rake
+    json (1.7.3)
+    mime-types (1.18)
     multi_json (1.0.4)
+    multipart-post (1.1.5)
     rake (0.9.2.2)
     rcov (1.0.0)
     rspec (2.8.0)
@@ -49,3 +70,4 @@ DEPENDENCIES
   rspec (~> 2.8)
   simplecov (~> 0.5)
   taskmapper (~> 0.8)
+  zendesk_api!
