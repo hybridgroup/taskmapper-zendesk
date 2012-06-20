@@ -7,21 +7,10 @@ module TaskMapper::Provider
       API = ZendeskAPI::Ticket
       ZENDESK_USER = ZendeskAPI::User
 
-      def initialize(*object) 
-        @system_data = {}
-        @cache = {}
-        first = object.shift
-        case first 
-        when Hash
-          super first.to_hash
-        else
-          @system_data[:client] = first
-          super first.attributes
+      def initialize(*args) 
+        case args.first
+        when Hash then super args.first
         end
-      end
-
-      def id 
-        self.nice_id
       end
 
       def title
@@ -38,10 +27,8 @@ module TaskMapper::Provider
 
       class << self
         def search(project_id)
-          SEARCH_API.find(:all, :params => {:query => "status:open"}).collect do |ticket| 
-            ticket.requestor = requestor(ticket)
-            ticket.assignee = assignee(ticket)
-            self.new ticket.attributes.merge! :project_id => project_id
+          TaskMapper::Provider::Zendesk.api.tickets.collect do |ticket|
+            self.new ticket.merge! :project_id => project_id
           end
         end
 
@@ -73,7 +60,7 @@ module TaskMapper::Provider
         end
 
         def zendesk_ticket(ticket_id)
-          API.find ticket_id
+          TaskMapper::Provider::Zendesk.api.tickets.find :id => ticket_id
         end
 
         def translate(hash, mapping) 
