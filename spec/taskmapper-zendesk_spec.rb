@@ -19,9 +19,7 @@ describe "TaskMapper::Provider::Zendesk" do
 
   context "when calling #valid? to an instance of zendesk provider with correct credentials" do 
     before(:each) do 
-      ActiveResource::HttpMock.respond_to do |mock|
-        mock.get '/api/v1/search.json?query=status%3Aopen', headers, fixture_for('tickets'), 200
-      end
+      stub_get 'https://foo:000000@taskmapper.zendesk.com/api/v2/tickets', 'tickets'
     end
 
     subject { tm.valid? } 

@@ -42,7 +42,7 @@ module TaskMapper::Provider
 
     def valid?
       begin
-        !ZendeskAPI::Search.find(:first, :params => {:query => "status:open"}).nil?
+        !TaskMapper::Provider::Zendesk.api.tickets.first.nil?
       rescue
         false
       end

@@ -4,13 +4,22 @@ module TaskMapper::Provider
       # declare needed overloaded methods here
 
       SEARCH_API = ZendeskAPI::Search
-      API = ZendeskAPI::Ticket
       ZENDESK_USER = ZendeskAPI::User
 
       def initialize(*args) 
         case args.first
         when Hash then super args.first
         end
+      end
+
+      def comments(*options)
+        fail "Not supported by Zendesk API"
+        []
+      end
+
+      def comment(*options)
+        fail "Not supported by Zendesk API"
+        nil
       end
 
       def title
@@ -46,9 +55,9 @@ module TaskMapper::Provider
 
         private
         def create_zendesk_ticket(options)
-          ticket = API.new translate options, {:title => :description}
-          ticket.save
-          ticket
+          #ticket = API.new translate options, {:title => :description}
+          #ticket.save
+          #ticket
         end
 
         def requestor(ticket)

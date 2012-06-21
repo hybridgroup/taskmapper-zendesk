@@ -42,12 +42,7 @@ module TaskMapper::Provider
       class << self
         def search(project_id, ticket_id, options = {}, limit = 1000)
           comment_id = 0
-          ZendeskAPI::Ticket.find(ticket_id).comments.collect do |comment|
-            comment_id += 1
-            self.new comment.attributes.merge!(:project_id => project_id,
-                                               :ticket_id => ticket_id,
-                                               :comment_id => comment_id)
-          end
+          TaskMapper::Provider::Zendesk.api.tickets.find(:id => ticket_id)
         end
 
         def find_by_id(project_id, ticket_id, id) 
@@ -55,7 +50,7 @@ module TaskMapper::Provider
         end
 
         def find_by_attributes(project_id, ticket_id, attributes = {})
-          search_by_attribute(self.search(project_id, ticket_id), attributes)
+          search_by_attribute(search(project_id, ticket_id), attributes)
         end
       end
     end
