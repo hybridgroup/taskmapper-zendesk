@@ -56,9 +56,15 @@ describe TaskMapper::Provider::Zendesk::Ticket do
   end
 
   describe "Create and update" do 
+    before(:each) do 
+      stub_get 'https://rafael%40hybridgroup.com:123456@hybridgroup.zendesk.com/api/v2/users/me', 'users/228124428'
+      stub_get 'https://rafael%40hybridgroup.com:123456@hybridgroup.zendesk.com/api/v2/users/228124428', 'users/228124428'
+    end
+
     context "when #calling #ticket! to a project instance" do 
-      pending { should be_an_instance_of ticket_class }
-      pending { subject.description.should == 'Testing' }
+      subject { project.ticket! :title => 'Testing' }
+      it { should be_an_instance_of ticket_class }
+      it { subject.description.should == 'Testing' }
     end
   end
 end
