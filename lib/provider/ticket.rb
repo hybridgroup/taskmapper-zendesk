@@ -65,16 +65,14 @@ module TaskMapper::Provider
         private
         def create_zendesk_ticket(options)
           options = translate(options, {:title => :subject, 
-                                        :requestor => :requester_id})
-          options[:requester_id] = zendesk_current_user_id
-          ticket = ZendeskAPI::Ticket.new(TaskMapper::Provider::Zendesk.api, options)
-          puts "#{ticket.inspect}"
-          ticket.save
+                              :requestor => :submitter_id})
+          options[:submitter_id] = zendesk_current_user_id
+          ticket = TaskMapper::Provider::Zendesk.api.tickets.create options
           ticket
         end
 
         def zendesk_current_user_id
-          TaskMapper::Provider::Zendesk.api.users.find(:id => 'me').id
+          TaskMapper::Provider::Zendesk.api.current_user.id
         end
 
         def zendesk_ticket(ticket_id)

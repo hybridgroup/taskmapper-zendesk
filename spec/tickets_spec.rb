@@ -61,10 +61,10 @@ describe TaskMapper::Provider::Zendesk::Ticket do
       stub_get 'https://rafael%40hybridgroup.com:123456@hybridgroup.zendesk.com/api/v2/users/228124428', 'users/228124428'
     end
 
-    context "when #calling #ticket! to a project instance" do 
-      subject { project.ticket! :title => 'Testing' }
-      it { should be_an_instance_of ticket_class }
-      it { subject.description.should == 'Testing' }
+    context "when calling #ticket! to a project instance without description" do 
+      subject {  project.ticket! :title => 'Testing'  }
+      it { should raise_exception }
     end
+
   end
 end
